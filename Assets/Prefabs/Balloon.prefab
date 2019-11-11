@@ -216,3 +216,6 @@ MonoBehaviour:
   bouciness: 0.5
   doesItFloat: 0
   gasStrenght: 1
+  balloonType: 0
+  anchorPoint: {fileID: 0}
+  leashDistance: 10
