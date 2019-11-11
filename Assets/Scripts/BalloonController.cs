@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BalloonController : MonoBehaviour
 {
+    private PolygonCollider2D coll;
+    
     [Range(0, 0.9f)]
     [Tooltip("Bouciness strength of the balloon between 0 and 0.9")]
     public float bouciness = 0.5f;
@@ -15,7 +17,10 @@ public class BalloonController : MonoBehaviour
     public int gasStrenght = 1;
     private int gravityMultiplier = 1;
 
-    private PolygonCollider2D coll;
+    [Range(-1, 1)]
+    [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nBalloon behaviour upon breaking \n 1 = Explode\n 0 = Nothing\n-1 = Implode")]
+    public int balloonType = 0;
+
     private void Start()
     {
         //get the rigidbody
