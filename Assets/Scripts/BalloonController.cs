@@ -7,19 +7,25 @@ public class BalloonController : MonoBehaviour
     private PolygonCollider2D coll;
     
     [Range(0, 0.9f)]
-    [Tooltip("Bouciness strength of the balloon between 0 and 0.9")]
+    [Tooltip("Bouciness strength of the balloon between 0 and 0.9\nDefault = 0.5")]
     public float bouciness = 0.5f;
 
     [Tooltip("Is the balloon meant to float or not")]
     public bool doesItFloat = false;
     [Range(0, 10)]
-    [Tooltip("Floatiness value for the balloon between 0 and 10. At 0 balloon will neither go up or down on its own")]
+    [Tooltip("Floatiness value for the balloon between 0 and 10. At 0 balloon will neither go up or down on its own\nDefault = 1")]
     public int gasStrenght = 1;
     private int gravityMultiplier = 1;
 
     [Range(-1, 1)]
     [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nBalloon behaviour upon breaking \n 1 = Explode\n 0 = Nothing\n-1 = Implode")]
     public int balloonType = 0;
+
+    [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nAnchor point to keep the balloon within specified distance")]
+    public Transform anchorPoint;
+    [Range(0, 100)]
+    [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nLeash distance for the balloon if anchor point is set\nDefault = 10")]
+    public int leashDistance = 10;
 
     private void Start()
     {
