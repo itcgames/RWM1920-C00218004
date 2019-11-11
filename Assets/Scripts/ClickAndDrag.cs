@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractiveSquare : MonoBehaviour
+public class ClickAndDrag : MonoBehaviour
 {
     private bool m_isHeldDown;
     private float startPosX;
@@ -34,7 +34,7 @@ public class InteractiveSquare : MonoBehaviour
             Vector2 mousePos;
             mousePos = Input.mousePosition;
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            
+
             startPosX = mousePos.x - transform.localPosition.x;
             startPosY = mousePos.y - transform.localPosition.y;
 
