@@ -226,7 +226,7 @@ PrefabInstance:
     - target: {fileID: 2260772522720646390, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
       propertyPath: m_Name
-      value: BalloonObject (1)
+      value: InteractiveBalloon2
       objectReference: {fileID: 0}
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
@@ -266,7 +266,7 @@ PrefabInstance:
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
@@ -282,6 +282,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579275493798395576, guid: ec2d96ab1693d464a9505b1200f83467,
+        type: 3}
+      propertyPath: bouciness
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec2d96ab1693d464a9505b1200f83467, type: 3}
@@ -400,7 +405,7 @@ Transform:
   - {fileID: 91973436}
   - {fileID: 1067831864}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &725753704
 GameObject:
@@ -536,17 +541,17 @@ PrefabInstance:
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
@@ -556,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8046066177017723469, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
@@ -783,7 +788,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1301967268
 Rigidbody2D:
@@ -1036,7 +1041,7 @@ PrefabInstance:
     - target: {fileID: 2260772522720646390, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
       propertyPath: m_Name
-      value: BalloonObject
+      value: InteractiveBalloon1
       objectReference: {fileID: 0}
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
@@ -1076,7 +1081,7 @@ PrefabInstance:
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2260772522720646391, guid: ec2d96ab1693d464a9505b1200f83467,
         type: 3}
@@ -1092,6 +1097,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 579275493798395576, guid: ec2d96ab1693d464a9505b1200f83467,
+        type: 3}
+      propertyPath: bouciness
+      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec2d96ab1693d464a9505b1200f83467, type: 3}
