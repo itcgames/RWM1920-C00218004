@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2260772522288277165}
   - component: {fileID: 2260772522288277164}
   - component: {fileID: 2260772522288277163}
+  - component: {fileID: 7399805945417883697}
   - component: {fileID: 8565646882002636110}
   - component: {fileID: 6675803616648868241}
   - component: {fileID: 579275493798395576}
@@ -90,7 +91,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2260772522288277162}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: e1a1482f3518e784285b41d7bf396f5c, type: 2}
   m_IsTrigger: 0
@@ -150,6 +151,22 @@ PolygonCollider2D:
       - {x: -0.4493817, y: -0.7937328}
       - {x: -0.31859344, y: -0.8752814}
       - {x: -0.18646717, y: -0.9262226}
+--- !u!70 &7399805945417883697
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260772522288277162}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: e1a1482f3518e784285b41d7bf396f5c, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0038707256, y: 0.13809669}
+  m_Size: {x: 1.6244829, y: 2.1270373}
+  m_Direction: 0
 --- !u!50 &8565646882002636110
 Rigidbody2D:
   serializedVersion: 4
@@ -165,7 +182,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -195,9 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28633711835131f4093f3e76b8aec5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bouciness: 0.5
-  doesItFloat: 0
-  gasStrenght: 0
+  bounciness: 0.5
+  float: 0
+  gasStrenght: 1
   balloonType: 0
   anchorPoint: {fileID: 0}
   leashDistance: 10
@@ -211,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2260772522720646391}
   m_Layer: 0
-  m_Name: InteractiveBalloon
+  m_Name: ClickabelBalloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,7 +328,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5286697919270063262}
-  m_Text: 'Interactive
+  m_Text: 'Clickable
 
     Balloon'
   m_OffsetZ: 0
