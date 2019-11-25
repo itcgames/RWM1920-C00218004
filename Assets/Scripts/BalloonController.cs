@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BalloonController : MonoBehaviour
 {
-    private PolygonCollider2D coll;
-    
+    private CapsuleCollider2D coll;
+
     [Range(0, 0.9f)]
     [Tooltip("Bouciness strength of the balloon between 0 and 0.9\nDefault = 0.5")]
     public float bounciness = 0.5f;
@@ -27,6 +27,8 @@ public class BalloonController : MonoBehaviour
     [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nLeash distance for the balloon if anchor point is set\nDefault = 10")]
     public int leashDistance = 10;
 
+    private SpringJoint2D spring;
+
     private void Start()
     {
         //get the rigidbody
@@ -37,7 +39,7 @@ public class BalloonController : MonoBehaviour
         rigidbody.Sleep();
 
         //get the collider
-        coll = gameObject.GetComponent<PolygonCollider2D>();
+        coll = gameObject.GetComponent<CapsuleCollider2D>();
 
         //clamp bouciness value to be between 0.0f and 0.9f
         Mathf.Clamp(bounciness, 0.0f, 0.9f);
@@ -58,8 +60,48 @@ public class BalloonController : MonoBehaviour
 
         //make the body not kinematic
         rigidbody.isKinematic = false;
+
+        spring = gameObject.GetComponent<SpringJoint2D>();
+        if (anchorPoint != null)
+        {
+            Vector2 anchor;
+            anchor = new Vector2(anchorPoint.position.x, anchorPoint.position.y);
+            spring.distance = leashDistance;
+            spring.connectedAnchor = anchor;
+            spring.anchor = new Vector2(-0.05f, -0.93f);
+            spring.enableCollision = true;
+            spring.dampingRatio = 1;
+            //spring.breakForce = 50;
+        }
+        else
+        {
+            spring.enabled = false;
+        }
         //wake the rigidbody up after apply physics changes
         rigidbody.WakeUp();
+    }
+
+    private void Update()
+    {
+        if (anchorPoint != null && spring != null)
+        {
+            float dst = Vector3.Distance(anchorPoint.position, transform.GetChild(0).position);
+            //Debug.Log("Distance: " + dst + " Force: " + spring.reactionForce);
+            spring.distance = leashDistance;
+            if (dst >= leashDistance)
+            {
+                spring.enabled = true;
+            }
+            else if (spring != null)
+            {
+                spring.enabled = false;
+            }
+        }
+    }
+
+    private void OnJointBreak2D(Joint2D brokenJoint)
+    {
+        brokenJoint = null;
     }
 
     private void OnValidate()
@@ -72,7 +114,7 @@ public class BalloonController : MonoBehaviour
         rigidbody.Sleep();
 
         //get the collider
-        coll = gameObject.GetComponent<PolygonCollider2D>();
+        coll = gameObject.GetComponent<CapsuleCollider2D>();
 
         //clamp bouciness value to be between 0.0f and 0.9f
         Mathf.Clamp(bounciness, 0.0f, 0.9f);

@@ -45,5 +45,7 @@ public class ClickAndDrag : MonoBehaviour
     private void OnMouseUp()
     {
         m_isHeldDown = false;
+        Rigidbody2D rb2 = gameObject.GetComponent<Rigidbody2D>();
+        rb2.WakeUp();
     }
 }
