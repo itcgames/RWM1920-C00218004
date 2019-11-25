@@ -14,7 +14,7 @@ public class BalloonController : MonoBehaviour
     public bool @float = false;
     [Range(0, 10)]
     [Tooltip("How light or heavy the gas is in the balloon, between 0 and 10. At 0 balloon will neither go up or down on its own\nDefault = 1")]
-    public int gasStrenght = 1;
+    public float gasStrenght = 1;
     private int gravityMultiplier = 1;
 
     [Range(-1, 1)]
@@ -22,7 +22,7 @@ public class BalloonController : MonoBehaviour
     public int balloonType = 0;
 
     [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nAnchor point to keep the balloon within specified distance")]
-    public Transform anchorPoint;
+    public GameObject anchorPoint;
     [Range(0, 100)]
     [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nLeash distance for the balloon if anchor point is set\nDefault = 10")]
     public int leashDistance = 10;
@@ -65,9 +65,16 @@ public class BalloonController : MonoBehaviour
         if (anchorPoint != null)
         {
             Vector2 anchor;
-            anchor = new Vector2(anchorPoint.position.x, anchorPoint.position.y);
+            if (anchorPoint.GetComponent<Rigidbody2D>())
+            {
+                spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();                
+            }
+            else
+            {
+                anchor = new Vector2(anchorPoint.transform.position.x, anchorPoint.transform.position.y);
+                spring.connectedAnchor = anchor;
+            }
             spring.distance = leashDistance;
-            spring.connectedAnchor = anchor;
             spring.anchor = new Vector2(-0.05f, -0.93f);
             spring.enableCollision = true;
             spring.dampingRatio = 1;
@@ -85,7 +92,7 @@ public class BalloonController : MonoBehaviour
     {
         if (anchorPoint != null && spring != null)
         {
-            float dst = Vector3.Distance(anchorPoint.position, transform.GetChild(0).position);
+            float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
             //Debug.Log("Distance: " + dst + " Force: " + spring.reactionForce);
             spring.distance = leashDistance;
             if (dst >= leashDistance)

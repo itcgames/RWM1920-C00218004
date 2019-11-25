@@ -176,7 +176,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0.39
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounciness: 0.5
   float: 0
-  gasStrenght: 1
+  gasStrenght: 0.39
   balloonType: 0
   anchorPoint: {fileID: 0}
   leashDistance: 3
@@ -211,12 +211,12 @@ SpringJoint2D:
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
+  m_BreakForce: 40
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: -0.05, y: -0.93}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
-  m_Distance: 0.93134314
+  m_Distance: 2.2005682
   m_DampingRatio: 0
   m_Frequency: 1
