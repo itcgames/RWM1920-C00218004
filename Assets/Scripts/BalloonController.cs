@@ -14,7 +14,7 @@ public class BalloonController : MonoBehaviour
     public bool @float = false;
     [Range(0, 10)]
     [Tooltip("How light or heavy the gas is in the balloon, between 0 and 10. At 0 balloon will neither go up or down on its own\nDefault = 1")]
-    public int gasStrenght = 1;
+    public float gasStrenght = 1;
     private int gravityMultiplier = 1;
 
     [Range(-1, 1)]
