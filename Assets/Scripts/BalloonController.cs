@@ -21,13 +21,14 @@ public class BalloonController : MonoBehaviour
     [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nBalloon behaviour upon breaking \n 1 = Explode\n 0 = Nothing\n-1 = Implode")]
     public int balloonType = 0;
 
-    [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nAnchor point to keep the balloon within specified distance")]
-    public Transform anchorPoint;
+    [Tooltip("Anchor point to keep the balloon connect to a spot or position")]
+    public GameObject anchorPoint;
     [Range(0, 100)]
-    [Tooltip("DOES NOTHING - NOT IMPLEMENTED\nLeash distance for the balloon if anchor point is set\nDefault = 10")]
+    [Tooltip("Leash distance for the balloon if anchor point is set\nDefault = 3")]
     public int leashDistance = 10;
 
     private SpringJoint2D spring;
+    bool noRb;
 
     private void Start()
     {
@@ -65,12 +66,23 @@ public class BalloonController : MonoBehaviour
         if (anchorPoint != null)
         {
             Vector2 anchor;
-            anchor = new Vector2(anchorPoint.position.x, anchorPoint.position.y);
+            if (anchorPoint.GetComponent<Rigidbody2D>() != null)
+            {
+                spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+                noRb = false;
+            }
+            else
+            {
+                anchor = new Vector2(anchorPoint.transform.position.x, anchorPoint.transform.position.y);
+                spring.connectedAnchor = anchor;
+                noRb = true;
+            }
             spring.distance = leashDistance;
-            spring.connectedAnchor = anchor;
             spring.anchor = new Vector2(-0.05f, -0.93f);
             spring.enableCollision = true;
             spring.dampingRatio = 1;
+
+
             //spring.breakForce = 50;
         }
         else
@@ -85,12 +97,24 @@ public class BalloonController : MonoBehaviour
     {
         if (anchorPoint != null && spring != null)
         {
-            float dst = Vector3.Distance(anchorPoint.position, transform.GetChild(0).position);
+            float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
             //Debug.Log("Distance: " + dst + " Force: " + spring.reactionForce);
             spring.distance = leashDistance;
             if (dst >= leashDistance)
             {
                 spring.enabled = true;
+                Vector2 anchor;
+                if (!noRb)
+                {
+                    //spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+                }
+                else
+                {
+                    anchor = new Vector2(anchorPoint.transform.position.x, anchorPoint.transform.position.y);
+                    spring.connectedAnchor = anchor;
+                }
+                spring.distance = leashDistance;
+                spring.anchor = new Vector2(-0.05f, -0.93f);
             }
             else if (spring != null)
             {
