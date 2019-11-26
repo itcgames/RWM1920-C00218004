@@ -220,7 +220,7 @@ Transform:
   m_LocalScale: {x: 4, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 723700648}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!61 &91973438
 BoxCollider2D:
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 537575104}
   - component: {fileID: 537575103}
   m_Layer: 0
-  m_Name: bottomPlane (1)
+  m_Name: topPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ Transform:
   m_LocalScale: {x: 26, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 723700648}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &537575103
 BoxCollider2D:
@@ -509,9 +509,9 @@ Transform:
   - {fileID: 2035178074}
   - {fileID: 1970161294}
   - {fileID: 725753708}
+  - {fileID: 537575102}
   - {fileID: 91973436}
   - {fileID: 1067831864}
-  - {fileID: 537575102}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -650,7 +650,7 @@ Transform:
   m_LocalScale: {x: 4, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 723700648}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!61 &1067831866
 BoxCollider2D:
@@ -729,6 +729,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9035519820131118283}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1388018410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9035519819099725140, guid: 82ffc8ca55964ba4492e77c84f886747,
+    type: 3}
+  m_PrefabInstance: {fileID: 9035519820131118283}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1889261924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -800,11 +806,16 @@ PrefabInstance:
         type: 3}
       propertyPath: anchorPoint
       value: 
-      objectReference: {fileID: 32345518}
+      objectReference: {fileID: 1388018410}
     - target: {fileID: 3156735112811035322, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: leashDistance
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3156735112811035322, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
+        type: 3}
+      propertyPath: gasStrenght
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_Distance
@@ -812,7 +823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_BreakForce
-      value: Infinity
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_ConnectedRigidBody
@@ -822,6 +833,11 @@ PrefabInstance:
       propertyPath: center
       value: 
       objectReference: {fileID: 1301967267}
+    - target: {fileID: 3897546364171958413, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0.39
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1763226128, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
