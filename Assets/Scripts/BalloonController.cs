@@ -25,13 +25,14 @@ public class BalloonController : MonoBehaviour
     public GameObject anchorPoint;
     [Range(0, 100)]
     [Tooltip("Leash distance for the balloon if anchor point is set\nDefault = 3")]
-    public int leashDistance = 10;
+    public int leashDistance = 3;
+    private float distanceToAnchor;
 
     private SpringJoint2D spring;
 
     private void Start()
     {
-        
+        distanceToAnchor = 0f;
         //get the rigidbody
         Rigidbody2D rigidbody = gameObject.GetComponent<Rigidbody2D>();
         //make it kinematic while we apply changes to the physics material
@@ -107,9 +108,21 @@ public class BalloonController : MonoBehaviour
         }
     }
 
-    public void SetAnchor()
+    public void SetAnchor(GameObject t_newAnchor)
     {
-        spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+        anchorPoint = t_newAnchor;
+        if (anchorPoint.GetComponent<Rigidbody2D>() != null)
+        {
+            spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+        }
+        else
+        {
+            spring.connectedAnchor = anchorPoint.transform.position;
+        }
+        Vector2 temp = gameObject.transform.position;
+        temp += new Vector2(-0.05f, -0.93f);
+        distanceToAnchor = Vector2.Distance(anchorPoint.transform.position, temp);
+        spring.distance = distanceToAnchor;
     }
 
     private void OnJointBreak2D(Joint2D brokenJoint)
