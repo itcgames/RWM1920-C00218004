@@ -76,6 +76,7 @@ public class BalloonController : MonoBehaviour
                 spring.connectedAnchor = anchor;
             }
 
+            spring.autoConfigureDistance = false;
             spring.distance = leashDistance;
             spring.anchor = new Vector2(-0.05f, -0.93f);
             spring.enableCollision = true;
