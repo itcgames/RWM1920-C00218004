@@ -107,6 +107,11 @@ public class BalloonController : MonoBehaviour
         }
     }
 
+    public void SetAnchor()
+    {
+        spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+    }
+
     private void OnJointBreak2D(Joint2D brokenJoint)
     {
         brokenJoint = null;
