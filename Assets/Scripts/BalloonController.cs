@@ -97,7 +97,7 @@ public class BalloonController : MonoBehaviour
         {
             float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
 
-            if (dst >= leashDistance || dst >= distanceToAnchor)
+            if (dst > leashDistance || dst > distanceToAnchor)
             {
                 spring.enabled = true;
             }
