@@ -345,7 +345,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7.279911
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -729,12 +729,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9035519820131118283}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1388018410 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9035519819099725140, guid: 82ffc8ca55964ba4492e77c84f886747,
-    type: 3}
-  m_PrefabInstance: {fileID: 9035519820131118283}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1889261924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -806,7 +800,7 @@ PrefabInstance:
         type: 3}
       propertyPath: anchorPoint
       value: 
-      objectReference: {fileID: 1388018410}
+      objectReference: {fileID: 32345518}
     - target: {fileID: 3156735112811035322, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: leashDistance
@@ -819,15 +813,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_Distance
-      value: 2.2005682
+      value: 3.4225135
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_BreakForce
-      value: 40
+      value: Infinity
       objectReference: {fileID: 0}
     - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1763226134, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1763226128, guid: 3967b3de0e54c7846b0f2c71dbad66c2, type: 3}
       propertyPath: center

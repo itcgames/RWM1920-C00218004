@@ -16,7 +16,7 @@ public class ClickAndDrag : MonoBehaviour
             Rigidbody2D rb2 = gameObject.GetComponent<Rigidbody2D>();
             rb2.velocity = Vector2.zero;
             rb2.angularVelocity = 0.0f;
-            rb2.Sleep();
+            //rb2.Sleep();
 
             Vector2 mousePos;
             mousePos = Input.mousePosition;
@@ -24,6 +24,7 @@ public class ClickAndDrag : MonoBehaviour
 
 
             gameObject.transform.localPosition = new Vector2(mousePos.x - startPosX, mousePos.y - startPosY);
+            rb2.position = gameObject.transform.position;
         }
     }
 
