@@ -118,6 +118,7 @@ public class BalloonController : MonoBehaviour
         else
         {
             spring.connectedAnchor = anchorPoint.transform.position;
+            spring.connectedBody = null;
         }
         Vector2 temp = gameObject.transform.position;
         temp += new Vector2(-0.05f, -0.93f);
