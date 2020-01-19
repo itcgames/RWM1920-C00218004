@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class NewBalloonController : MonoBehaviour
 {
-    private CapsuleCollider2D coll;
-
     [Tooltip("This will draw gizmos in edit mode for debug purposes\nRed circle = Area of Effect\nCyan = Leash Distance" +
         "\nMagenta = Vector applied to affected objects")]
     public bool showDebugGizmos = false;
 
-    [Range(0, 1.0f)]
-    [Tooltip("Bouciness strength of the balloon between 0 and 1\nDefault = 0.5")]
+    [Tooltip("Bouciness strength of the balloon. \nDefault = 0\nDoubled force of bounce = 1\nGets clamped to 0 if negative")]
     public float bounciness = 0.5f;
 
     [Tooltip("Is the balloon meant to float or not")]
     public bool @float = false;
 
-    [Range(0, 10)]
-    [Tooltip("How fast the balloon with rise or fall. At 0 balloon will neither go up or down on its own\nDefault = 1")]
+    [Tooltip("How fast the balloon with rise or fall. At 0 balloon will float on the spot\nDefault = 1\nGets clamped to 0 if negative")]
     public float gasStrenght = 1;
     private int gravityMultiplier = 1;
 
@@ -26,20 +22,23 @@ public class NewBalloonController : MonoBehaviour
     [Tooltip("Balloon behaviour upon breaking \n 1 = Explode\n 0 = Nothing\n-1 = Implode")]
     public int balloonType = 0;
 
-    [Tooltip("Distance from the balloon that will affect objects")]
+    [Tooltip("Distance from the balloon that will affect objects\nGets clamped to 0 if negative")]
     public float distanceOfAffection;
 
-    [Tooltip("How strong the affection will be")]
+    [Tooltip("How strong the affection will be\nGets clamped to 0 if negative")]
     public float affectionStrenght;
 
-    [Tooltip("Force needed to break the balloon")]
-    public int breakForce = 0;
+    [Tooltip("Force needed to break the balloon\nGets clamped to 0 if negative\nInfinity = Unbreakable")]
+    public float popForce = 0;
 
     [Tooltip("Anchor point to keep the balloon connect to a spot or position")]
     public GameObject anchorPoint;
 
-    [Tooltip("Leash distance for the balloon if anchor point is set")]
+    [Tooltip("Leash distance for the balloon if anchor point is set\nGets clamped to 0 if negative\nInfinity = Unbreakable")]
     public float leashDistance;
+
+    [Tooltip("Force needed to break balloon's leash")]
+    public float leashBreakForce;
 
     public AudioClip implodeSound;
     public AudioClip popSound;
@@ -60,16 +59,21 @@ public class NewBalloonController : MonoBehaviour
         line.endWidth = 0.15f;
         line.startColor = Color.black;
         line.endColor = Color.black;
-        
-        //clamp all values
-        affectionStrenght = Mathf.Max(0.0f, affectionStrenght);
-        distanceOfAffection = Mathf.Max(0.0f, distanceOfAffection);
-        breakForce = Mathf.Max(0, breakForce);
-        leashDistance = Mathf.Max(0.0f, leashDistance);
-        gasStrenght = Mathf.Clamp(gasStrenght, 0, 10);
-        bounciness = Mathf.Clamp(bounciness, 0.0f, 1.0f);
 
+        //clamp all values
+        affectionStrenght = Mathf.Clamp(affectionStrenght, 0.0f, float.MaxValue);
+        distanceOfAffection = Mathf.Clamp(distanceOfAffection, 0.0f, float.MaxValue);
+        bounciness = Mathf.Clamp(bounciness, 0.0f, float.MaxValue);
+        leashDistance = Mathf.Clamp(leashDistance, 0.0f, float.MaxValue);
+        gasStrenght = Mathf.Clamp(gasStrenght, 0.0f, float.MaxValue);
+
+        //use Max() instead as these two values can be set to infinity
+        leashBreakForce = Mathf.Max(0.0f, leashBreakForce);
+        popForce = Mathf.Max(0.0f, popForce);
+
+        //list used to prevent objects from getting bounce force aplified several times
         m_collidedRigidBodies = new List<Rigidbody2D>();
+        //anchor point at the bottom of the balloon
         m_localAnchor = new Vector2(transform.GetChild(0).transform.localPosition.x, transform.GetChild(0).transform.localPosition.y);
 
         //get the rigidbody
@@ -79,13 +83,6 @@ public class NewBalloonController : MonoBehaviour
         //make the rigidbody asleep while we apply changes to the physics material
         rigidbody.Sleep();
 
-        //get the collider
-        coll = gameObject.GetComponent<CapsuleCollider2D>();
-
-
-        //apply bouciness to the physics material
-        //coll.sharedMaterial.bounciness = bounciness;
-
         //check if the balloon is set to floating or not
         if (@float)
         {
@@ -93,13 +90,13 @@ public class NewBalloonController : MonoBehaviour
             gravityMultiplier = -1;
         }
 
-
         //set the 'floatiness' value
         rigidbody.gravityScale = (gravityMultiplier * gasStrenght);
 
         //make the body not kinematic
         rigidbody.isKinematic = false;
 
+        //balloon's "string"
         spring = gameObject.GetComponent<SpringJoint2D>();
         if (anchorPoint != null)
         {
@@ -116,11 +113,13 @@ public class NewBalloonController : MonoBehaviour
                 spring.connectedAnchor = anchor;
             }
 
+            //configure spring joint
             spring.autoConfigureDistance = false;
             spring.distance = leashDistance;
             spring.anchor = m_localAnchor;
             spring.enableCollision = true;
             spring.dampingRatio = 1;
+            spring.breakForce = leashBreakForce;
         }
         else
         {
@@ -132,20 +131,26 @@ public class NewBalloonController : MonoBehaviour
 
     private void Update()
     {
+        //in case anchor point in not set or spring has been broken
         if (anchorPoint != null && spring != null)
         {
             //distance between balloon's local anchor point and the center of the object its anchored to
             float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
 
+            //if the balloon is further away than leashDistance
             if (dst > leashDistance)
             {
+                //enable spring to pull it back
                 spring.enabled = true;
             }
+            //if spring is not broken
             else if (spring != null)
             {
+                //disable spring as we dont have to pull the balloon
                 spring.enabled = false;
             }
 
+            //set positons for line endpoints
             line.SetPosition(0, transform.GetChild(0).position);
             line.SetPosition(1, anchorPoint.transform.position);
         }
@@ -167,6 +172,7 @@ public class NewBalloonController : MonoBehaviour
     public void SetAnchor(GameObject t_newAnchor)
     {
         anchorPoint = t_newAnchor;
+        line.enabled = true;
 
         //if gameObject has a RB2D
         if (anchorPoint.GetComponent<Rigidbody2D>() != null)
@@ -204,7 +210,7 @@ public class NewBalloonController : MonoBehaviour
                 collision.rigidbody.velocity *= (1.0f + bounciness);
                 m_collidedRigidBodies.Add(collision.rigidbody);
             }
-            if (collision.relativeVelocity.magnitude > breakForce)
+            if (collision.relativeVelocity.magnitude > popForce)
             {
                 Debug.Log("Breaking force: " + collision.relativeVelocity.magnitude);
                 Destroy(gameObject);
@@ -233,6 +239,7 @@ public class NewBalloonController : MonoBehaviour
     private void OnJointBreak2D(Joint2D brokenJoint)
     {
         brokenJoint = null;
+        line.enabled = false;
     }
 
     private void OnApplicationQuit()
@@ -278,7 +285,7 @@ public class NewBalloonController : MonoBehaviour
 
                     }
                 }
-            } 
+            }
         }
     }
 

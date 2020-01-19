@@ -135,15 +135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugGizmos: 0
-  bounciness: 0.5
+  bounciness: 1.67
   float: 0
   gasStrenght: 1
   balloonType: 0
   distanceOfAffection: 0
   affectionStrenght: 0
-  breakForce: 0
+  popForce: 0
   anchorPoint: {fileID: 0}
   leashDistance: 0
+  leashBreakForce: Infinity
   implodeSound: {fileID: 8300000, guid: 23955a90cb4cf954386670d618a9a55c, type: 3}
   popSound: {fileID: 8300000, guid: f1174324fa618b844b9baaa43f8f6cb3, type: 3}
 --- !u!231 &6299618579319404688
