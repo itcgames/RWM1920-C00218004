@@ -1126,6 +1126,16 @@ PrefabInstance:
       propertyPath: showDebugGizmos
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6299618579319404691, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
+        type: 3}
+      propertyPath: popForce
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299618579319404691, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
+        type: 3}
+      propertyPath: bounciness
+      value: Infinity
+      objectReference: {fileID: 0}
     - target: {fileID: 6299618579319404692, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_Enabled
