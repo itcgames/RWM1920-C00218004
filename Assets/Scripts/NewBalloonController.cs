@@ -6,7 +6,7 @@ public class NewBalloonController : MonoBehaviour
 {
     [Tooltip("This will draw gizmos in edit mode for debug purposes\nRed circle = Area of Effect\nCyan = Leash Distance" +
         "\nMagenta = Vector applied to affected objects")]
-    public bool showDebugGizmos = false;
+    public bool debugGizmos = false;
 
     [Tooltip("Bouciness strength of the balloon. \nDefault = 0\nDoubled force of bounce = 1\nGets clamped to 0 if negative")]
     public float bounciness = 0.5f;
@@ -293,7 +293,7 @@ public class NewBalloonController : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        if (showDebugGizmos)
+        if (debugGizmos)
         {
             Gizmos.color = Color.red;
 
