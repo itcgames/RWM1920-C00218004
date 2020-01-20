@@ -23,22 +23,22 @@ public class NewBalloonController : MonoBehaviour
     public int balloonType = 0;
 
     [Tooltip("Distance from the balloon that will affect objects\nGets clamped to 0 if negative")]
-    public float distanceOfAffection;
+    public float distOfAffect;
 
     [Tooltip("How strong the affection will be\nGets clamped to 0 if negative")]
-    public float affectionStrenght;
+    public float affectStrenght;
 
     [Tooltip("Force needed to break the balloon\nGets clamped to 0 if negative\nInfinity = Unbreakable")]
-    public float popForce = 0;
+    public float breakForce = 0;
 
     [Tooltip("Anchor point to keep the balloon connect to a spot or position")]
     public GameObject anchorPoint;
 
-    [Tooltip("Leash distance for the balloon if anchor point is set\nGets clamped to 0 if negative\nInfinity = Unbreakable")]
-    public float leashDistance;
+    [Tooltip("Anchor distance for the balloon IF anchor point is set\nGets clamped to 0 if negative")]
+    public float anchorLenght;
 
-    [Tooltip("Force needed to break balloon's leash")]
-    public float leashBreakForce;
+    [Tooltip("Force needed to break balloon's anchor rope\nInfinity = Unbreakable")]
+    public float anchorBreakForce;
 
     public AudioClip implodeSound;
     public AudioClip popSound;
@@ -61,15 +61,15 @@ public class NewBalloonController : MonoBehaviour
         line.endColor = Color.black;
 
         //clamp all values
-        affectionStrenght = Mathf.Clamp(affectionStrenght, 0.0f, float.MaxValue);
-        distanceOfAffection = Mathf.Clamp(distanceOfAffection, 0.0f, float.MaxValue);
+        affectStrenght = Mathf.Clamp(affectStrenght, 0.0f, float.MaxValue);
+        distOfAffect = Mathf.Clamp(distOfAffect, 0.0f, float.MaxValue);
         bounciness = Mathf.Clamp(bounciness, 0.0f, float.MaxValue);
-        leashDistance = Mathf.Clamp(leashDistance, 0.0f, float.MaxValue);
+        anchorLenght = Mathf.Clamp(anchorLenght, 0.0f, float.MaxValue);
         gasStrenght = Mathf.Clamp(gasStrenght, 0.0f, float.MaxValue);
 
         //use Max() instead as these two values can be set to infinity
-        leashBreakForce = Mathf.Max(0.0f, leashBreakForce);
-        popForce = Mathf.Max(0.0f, popForce);
+        anchorBreakForce = Mathf.Max(0.0f, anchorBreakForce);
+        breakForce = Mathf.Max(0.0f, breakForce);
 
         //list used to prevent objects from getting bounce force aplified several times
         m_collidedRigidBodies = new List<Rigidbody2D>();
@@ -115,11 +115,11 @@ public class NewBalloonController : MonoBehaviour
 
             //configure spring joint
             spring.autoConfigureDistance = false;
-            spring.distance = leashDistance;
+            spring.distance = anchorLenght;
             spring.anchor = m_localAnchor;
             spring.enableCollision = true;
             spring.dampingRatio = 1;
-            spring.breakForce = leashBreakForce;
+            spring.breakForce = anchorBreakForce;
         }
         else
         {
@@ -138,7 +138,7 @@ public class NewBalloonController : MonoBehaviour
             float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
 
             //if the balloon is further away than leashDistance
-            if (dst > leashDistance)
+            if (dst > anchorLenght)
             {
                 //enable spring to pull it back
                 spring.enabled = true;
@@ -210,15 +210,15 @@ public class NewBalloonController : MonoBehaviour
                 collision.rigidbody.velocity *= (1.0f + bounciness);
                 m_collidedRigidBodies.Add(collision.rigidbody);
             }
-            if (collision.relativeVelocity.magnitude > popForce)
+            if (collision.relativeVelocity.magnitude > breakForce)
             {
                 Debug.Log("Breaking force: " + collision.relativeVelocity.magnitude);
                 Destroy(gameObject);
             }
-        }
-        else if (collision.rigidbody)
-        {
-            Debug.Log("Force experienced: " + collision.relativeVelocity.magnitude);
+            else
+            {
+                Debug.Log("Force experienced: " + collision.relativeVelocity.magnitude);
+            }
         }
     }
 
@@ -266,7 +266,7 @@ public class NewBalloonController : MonoBehaviour
             Collider2D[] hitColliders;
             if (balloonType != 0)
             {
-                hitColliders = Physics2D.OverlapCircleAll(transform.position, distanceOfAffection);
+                hitColliders = Physics2D.OverlapCircleAll(transform.position, distOfAffect);
 
                 foreach (var affectedObject in hitColliders)
                 {
@@ -276,11 +276,11 @@ public class NewBalloonController : MonoBehaviour
 
                         if (balloonType == 1)
                         {
-                            affectedObject.GetComponent<Rigidbody2D>().velocity = (vectorToBalloon * affectionStrenght);
+                            affectedObject.GetComponent<Rigidbody2D>().velocity = (vectorToBalloon * affectStrenght);
                         }
                         else if (balloonType == -1)
                         {
-                            affectedObject.GetComponent<Rigidbody2D>().velocity = -(vectorToBalloon * affectionStrenght);
+                            affectedObject.GetComponent<Rigidbody2D>().velocity = -(vectorToBalloon * affectStrenght);
                         }
 
                     }
@@ -298,17 +298,17 @@ public class NewBalloonController : MonoBehaviour
             Gizmos.color = Color.red;
 
             //draw force application point
-            Gizmos.DrawWireSphere(transform.position, distanceOfAffection);
+            Gizmos.DrawWireSphere(transform.position, distOfAffect);
 
             Gizmos.color = Color.cyan;
             //draw force application point
-            Gizmos.DrawWireSphere(transform.GetChild(0).position, leashDistance);
+            Gizmos.DrawWireSphere(transform.GetChild(0).position, anchorLenght);
 
             Gizmos.color = Color.magenta;
             Collider2D[] hitColliders;
             if (balloonType != 0)
             {
-                hitColliders = Physics2D.OverlapCircleAll(transform.position, distanceOfAffection);
+                hitColliders = Physics2D.OverlapCircleAll(transform.position, distOfAffect);
 
                 foreach (var affectedObject in hitColliders)
                 {
@@ -318,11 +318,11 @@ public class NewBalloonController : MonoBehaviour
 
                         if (balloonType == 1)
                         {
-                            Gizmos.DrawLine(affectedObject.transform.position, (vectorToBalloon * affectionStrenght) + affectedObject.transform.position);
+                            Gizmos.DrawLine(affectedObject.transform.position, (vectorToBalloon * affectStrenght) + affectedObject.transform.position);
                         }
                         else if (balloonType == -1)
                         {
-                            Gizmos.DrawLine(affectedObject.transform.position, -(vectorToBalloon * affectionStrenght) + affectedObject.transform.position);
+                            Gizmos.DrawLine(affectedObject.transform.position, -(vectorToBalloon * affectStrenght) + affectedObject.transform.position);
                         }
                     }
                 }
