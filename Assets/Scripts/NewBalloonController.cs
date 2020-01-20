@@ -26,7 +26,7 @@ public class NewBalloonController : MonoBehaviour
     public float distOfAffect;
 
     [Tooltip("How strong the affection will be\nGets clamped to 0 if negative")]
-    public float affectStrenght;
+    public float affectStrength;
 
     [Tooltip("Force needed to break the balloon\nGets clamped to 0 if negative\nInfinity = Unbreakable")]
     public float breakForce = 0;
@@ -61,7 +61,7 @@ public class NewBalloonController : MonoBehaviour
         line.endColor = Color.black;
 
         //clamp all values
-        affectStrenght = Mathf.Clamp(affectStrenght, 0.0f, float.MaxValue);
+        affectStrength = Mathf.Clamp(affectStrength, 0.0f, float.MaxValue);
         distOfAffect = Mathf.Clamp(distOfAffect, 0.0f, float.MaxValue);
         bounciness = Mathf.Clamp(bounciness, 0.0f, float.MaxValue);
         anchorLenght = Mathf.Clamp(anchorLenght, 0.0f, float.MaxValue);
@@ -276,11 +276,11 @@ public class NewBalloonController : MonoBehaviour
 
                         if (balloonType == 1)
                         {
-                            affectedObject.GetComponent<Rigidbody2D>().velocity = (vectorToBalloon * affectStrenght);
+                            affectedObject.GetComponent<Rigidbody2D>().velocity = (vectorToBalloon * affectStrength);
                         }
                         else if (balloonType == -1)
                         {
-                            affectedObject.GetComponent<Rigidbody2D>().velocity = -(vectorToBalloon * affectStrenght);
+                            affectedObject.GetComponent<Rigidbody2D>().velocity = -(vectorToBalloon * affectStrength);
                         }
 
                     }
@@ -318,11 +318,11 @@ public class NewBalloonController : MonoBehaviour
 
                         if (balloonType == 1)
                         {
-                            Gizmos.DrawLine(affectedObject.transform.position, (vectorToBalloon * affectStrenght) + affectedObject.transform.position);
+                            Gizmos.DrawLine(affectedObject.transform.position, (vectorToBalloon * affectStrength) + affectedObject.transform.position);
                         }
                         else if (balloonType == -1)
                         {
-                            Gizmos.DrawLine(affectedObject.transform.position, -(vectorToBalloon * affectStrenght) + affectedObject.transform.position);
+                            Gizmos.DrawLine(affectedObject.transform.position, -(vectorToBalloon * affectStrength) + affectedObject.transform.position);
                         }
                     }
                 }

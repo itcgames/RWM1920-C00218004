@@ -140,7 +140,7 @@ MonoBehaviour:
   gasStrenght: 1
   balloonType: -1
   distOfAffect: 2.48
-  affectStrenght: 5
+  affectStrength: 5
   breakForce: 10
   anchorPoint: {fileID: 0}
   anchorLenght: 3
