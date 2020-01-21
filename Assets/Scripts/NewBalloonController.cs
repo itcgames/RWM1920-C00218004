@@ -51,6 +51,7 @@ public class NewBalloonController : MonoBehaviour
     private LineRenderer line;
 
     private bool quitting = false;
+	private bool destroyedDueToForce = false;
 
     private void Start()
     {
@@ -246,6 +247,7 @@ public class NewBalloonController : MonoBehaviour
             if (collision.relativeVelocity.magnitude > breakForce)
             {
                 Debug.Log("Breaking force: " + collision.relativeVelocity.magnitude);
+				destroyedDueToForce = true;
                 Destroy(gameObject);
             }
             else
@@ -282,7 +284,7 @@ public class NewBalloonController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (!quitting)
+        if (!quitting && !destroyedDueToForce)
         {
             switch (balloonType)
             {
