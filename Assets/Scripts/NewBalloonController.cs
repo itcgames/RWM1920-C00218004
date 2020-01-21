@@ -162,8 +162,7 @@ public class NewBalloonController : MonoBehaviour
     /// A GameObject is used as the anchor point.
     /// The anchor point is set to that object's local (0,0) position
     /// 
-    /// It also sets the leash distance to the current distance from
-    /// the local anchor to the newly connected anchor
+    /// It keeps the same anchor distance as set in the editor
     /// 
     /// Eg. setting an anchor point with RMB to a GameObject
     /// with or without a RB2D
@@ -186,8 +185,40 @@ public class NewBalloonController : MonoBehaviour
         {
             spring.connectedAnchor = anchorPoint.transform.position;
         }
+    }
 
-        spring.distance = Vector3.Distance(transform.GetChild(0).transform.position, anchorPoint.transform.position);
+    /// <summary>
+    /// This can be called when making an interactive balloon.
+    /// 
+    /// A GameObject is used as the anchor point.
+    /// The anchor point is set to that object's local (0,0) position
+    /// 
+    /// It sets anchor distance to be the distance between the point 
+    /// and the balloon
+    /// 
+    /// Eg. setting an anchor point with RMB to a GameObject
+    /// with or without a RB2D
+    /// </summary>
+    /// <param name="t_newAnchor">a GameObject with or without RB2D</param>
+    public void SetAnchor(GameObject t_newAnchor, float t_anchorDistance)
+    {
+        anchorPoint = t_newAnchor;
+        line.enabled = true;
+
+        //if gameObject has a RB2D
+        if (anchorPoint.GetComponent<Rigidbody2D>() != null)
+        {
+            //make the anchor connect to the RB2D
+            spring.connectedBody = anchorPoint.GetComponent<Rigidbody2D>();
+            //set the anchor to the local center of that body
+            spring.connectedAnchor = new Vector2(0.0f, 0.0f);
+        }
+        else
+        {
+            spring.connectedAnchor = anchorPoint.transform.position;
+        }
+
+        spring.distance = t_anchorDistance;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
