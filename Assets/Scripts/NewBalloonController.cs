@@ -35,7 +35,7 @@ public class NewBalloonController : MonoBehaviour
     public GameObject anchorPoint;
 
     [Tooltip("Anchor distance for the balloon IF anchor point is set\nGets clamped to 0 if negative")]
-    public float anchorLenght;
+    public float anchorDistance;
 
     [Tooltip("Force needed to break balloon's anchor rope\nInfinity = Unbreakable")]
     public float anchorBreakForce;
@@ -64,7 +64,7 @@ public class NewBalloonController : MonoBehaviour
         affectStrength = Mathf.Clamp(affectStrength, 0.0f, float.MaxValue);
         distOfAffect = Mathf.Clamp(distOfAffect, 0.0f, float.MaxValue);
         bounciness = Mathf.Clamp(bounciness, 0.0f, float.MaxValue);
-        anchorLenght = Mathf.Clamp(anchorLenght, 0.0f, float.MaxValue);
+        anchorDistance = Mathf.Clamp(anchorDistance, 0.0f, float.MaxValue);
         gasStrenght = Mathf.Clamp(gasStrenght, 0.0f, float.MaxValue);
 
         //use Max() instead as these two values can be set to infinity
@@ -115,7 +115,7 @@ public class NewBalloonController : MonoBehaviour
 
             //configure spring joint
             spring.autoConfigureDistance = false;
-            spring.distance = anchorLenght;
+            spring.distance = anchorDistance;
             spring.anchor = m_localAnchor;
             spring.enableCollision = true;
             spring.dampingRatio = 1;
@@ -138,7 +138,7 @@ public class NewBalloonController : MonoBehaviour
             float dst = Vector3.Distance(anchorPoint.transform.position, transform.GetChild(0).position);
 
             //if the balloon is further away than leashDistance
-            if (dst > anchorLenght)
+            if (dst > anchorDistance)
             {
                 //enable spring to pull it back
                 spring.enabled = true;
@@ -218,6 +218,7 @@ public class NewBalloonController : MonoBehaviour
             spring.connectedAnchor = anchorPoint.transform.position;
         }
 
+        anchorDistance = t_anchorDistance;
         spring.distance = t_anchorDistance;
     }
 
@@ -333,7 +334,7 @@ public class NewBalloonController : MonoBehaviour
 
             Gizmos.color = Color.cyan;
             //draw force application point
-            Gizmos.DrawWireSphere(transform.GetChild(0).position, anchorLenght);
+            Gizmos.DrawWireSphere(transform.GetChild(0).position, anchorDistance);
 
             Gizmos.color = Color.magenta;
             Collider2D[] hitColliders;
