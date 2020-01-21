@@ -148,6 +148,7 @@ public class NewBalloonController : MonoBehaviour
             {
                 //disable spring as we dont have to pull the balloon
                 spring.enabled = false;
+				spring.enableCollision = true;
             }
 
             //set positons for line endpoints
