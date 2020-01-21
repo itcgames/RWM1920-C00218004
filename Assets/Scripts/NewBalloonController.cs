@@ -303,7 +303,7 @@ public class NewBalloonController : MonoBehaviour
 
                 foreach (var affectedObject in hitColliders)
                 {
-                    if (affectedObject.GetComponent<Rigidbody2D>())
+                    if (affectedObject.GetComponent<Rigidbody2D>().bodyType == RigidbodyType2D.Dynamic)
                     {
                         var vectorToBalloon = Vector3.Normalize(affectedObject.transform.position - transform.position);
 
