@@ -325,6 +325,11 @@ PrefabInstance:
       propertyPath: affectStrenght
       value: 17.85
       objectReference: {fileID: 0}
+    - target: {fileID: 6299618579319404691, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
+        type: 3}
+      propertyPath: breakForce
+      value: Infinity
+      objectReference: {fileID: 0}
     - target: {fileID: 6299618579319404695, guid: 3967b3de0e54c7846b0f2c71dbad66c2,
         type: 3}
       propertyPath: m_LocalPosition.x

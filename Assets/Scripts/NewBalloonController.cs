@@ -186,6 +186,7 @@ public class NewBalloonController : MonoBehaviour
         else
         {
             spring.connectedAnchor = anchorPoint.transform.position;
+			spring.connectedBody = null;
         }
     }
 
@@ -217,6 +218,7 @@ public class NewBalloonController : MonoBehaviour
         }
         else
         {
+			spring.connectedBody = null;
             spring.connectedAnchor = anchorPoint.transform.position;
         }
 
@@ -284,7 +286,7 @@ public class NewBalloonController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (!quitting && !destroyedDueToForce)
+        if (!quitting && destroyedDueToForce)
         {
             switch (balloonType)
             {
