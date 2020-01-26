@@ -42,18 +42,21 @@ public class NewBalloonController : MonoBehaviour
 
     public AudioClip implodeSound;
     public AudioClip popSound;
+    public AudioClip anchorBreakSound;
+    public AudioClip bounceSound;
+    public Animator animator;
 
     private Vector2 m_localAnchor;
     private List<Rigidbody2D> m_collidedRigidBodies;
 
-    private SpringJoint2D spring;
+    public SpringJoint2D spring;
 
     private LineRenderer line;
 
     private bool quitting = false;
 	private bool destroyedDueToForce = false;
 
-    private void Start()
+    public void Start()
     {
         line = GetComponent<LineRenderer>();
         line.startWidth = 0.15f;
@@ -99,6 +102,7 @@ public class NewBalloonController : MonoBehaviour
 
         //balloon's "string"
         spring = gameObject.GetComponent<SpringJoint2D>();
+        spring.enabled = false;
         if (anchorPoint != null)
         {
             Vector2 anchor;
@@ -122,15 +126,12 @@ public class NewBalloonController : MonoBehaviour
             spring.dampingRatio = 1;
             spring.breakForce = anchorBreakForce;
         }
-        else
-        {
-            spring.enabled = false;
-        }
+
         //wake the rigidbody up after apply physics changes
         rigidbody.WakeUp();
     }
 
-    private void Update()
+    public void Update()
     {
         //in case anchor point in not set or spring has been broken
         if (anchorPoint != null && spring != null)
@@ -226,8 +227,9 @@ public class NewBalloonController : MonoBehaviour
         spring.distance = t_anchorDistance;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
+        AudioSource.PlayClipAtPoint(bounceSound, transform.position);
         if (collision.rigidbody)
         {
             bool alreadyCollided = false;
@@ -250,7 +252,8 @@ public class NewBalloonController : MonoBehaviour
             {
                 Debug.Log("Breaking force: " + collision.relativeVelocity.magnitude);
 				destroyedDueToForce = true;
-                Destroy(gameObject);
+                animator.SetBool("Broken", true);
+                breakBalloon();
             }
             else
             {
@@ -259,7 +262,7 @@ public class NewBalloonController : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    public void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.rigidbody)
         {
@@ -273,18 +276,19 @@ public class NewBalloonController : MonoBehaviour
         }
     }
 
-    private void OnJointBreak2D(Joint2D brokenJoint)
+    public void OnJointBreak2D(Joint2D brokenJoint)
     {
         brokenJoint = null;
         line.enabled = false;
+        AudioSource.PlayClipAtPoint(anchorBreakSound, transform.position);
     }
 
-    private void OnApplicationQuit()
+    public void OnApplicationQuit()
     {
         quitting = true;
     }
 
-    private void OnDestroy()
+    public void breakBalloon()
     {
         if (!quitting && destroyedDueToForce)
         {
@@ -294,9 +298,8 @@ public class NewBalloonController : MonoBehaviour
                     AudioSource.PlayClipAtPoint(implodeSound, transform.position);
                     break;
                 case 1:
-                    AudioSource.PlayClipAtPoint(popSound, transform.position);
-                    break;
                 default:
+                    AudioSource.PlayClipAtPoint(popSound, transform.position);
                     break;
             }
 
@@ -324,6 +327,9 @@ public class NewBalloonController : MonoBehaviour
                 }
             }
         }
+
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().Sleep();
     }
 
     private void OnDrawGizmosSelected()

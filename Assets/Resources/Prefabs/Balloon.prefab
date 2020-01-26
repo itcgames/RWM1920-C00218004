@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6299618579319404691}
   - component: {fileID: 6299618579319404688}
   - component: {fileID: 120885367446775164}
+  - component: {fileID: 3539922836435240354}
   m_Layer: 0
   m_Name: Balloon
   m_TagString: Untagged
@@ -135,18 +136,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugGizmos: 1
-  bounciness: 0.5
+  bounciness: 1
   float: 0
   gasStrenght: 1
-  balloonType: -1
-  distOfAffect: 2.48
+  balloonType: 0
+  distOfAffect: 2.5
   affectStrength: 5
-  breakForce: 10
+  breakForce: Infinity
   anchorPoint: {fileID: 0}
-  anchorLenght: 3
+  anchorDistance: 0
   anchorBreakForce: Infinity
   implodeSound: {fileID: 8300000, guid: 23955a90cb4cf954386670d618a9a55c, type: 3}
   popSound: {fileID: 8300000, guid: f1174324fa618b844b9baaa43f8f6cb3, type: 3}
+  anchorBreakSound: {fileID: 8300000, guid: b62d9e252911fb645998726f117a9f7f, type: 3}
+  bounceSound: {fileID: 8300000, guid: 43e08c5cb88728945b77fde2137eee7d, type: 3}
+  animator: {fileID: 3539922836435240354}
 --- !u!231 &6299618579319404688
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -263,6 +267,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!95 &3539922836435240354
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6299618579319404689}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 555291b9f8806894483f3ce40d243eb2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6299618580969571994
 GameObject:
   m_ObjectHideFlags: 0
